@@ -27,3 +27,13 @@ set fileencoding=utf-8
 set fileencodings=iso-2022-jp,utf-8,cp932,euc-jp
 set fenc=utf-8
 set enc=utf-8
+
+" move during lines
+set whichwrap+=h,l,<,>,[,],b,s
+" highlighting ()
+set showmatch
+" show status line
+set laststatus=2
+"ファイルナンバー表示
+set statusline=[%n]
+
