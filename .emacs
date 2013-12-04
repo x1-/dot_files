@@ -17,6 +17,9 @@
   (add-to-list 'default-frame-alist '(background-color . "black"))
 ))
 
+;;; バックアップファイルを作らない
+(setq backup-inhibited t)
+
 ;;; ツールバーを消す
 (tool-bar-mode 0)
 
@@ -77,6 +80,24 @@
 (add-hook 'c-mode-hook
           '(lambda ()
              (c-toggle-electric-state -1)))
+
+;;; スクロールを一行ずつにする
+(setq scroll-step 1)
+
+;;; スクロールバーを右側に表示する
+(set-scroll-bar-mode 'right)
+
+;;; 画面右端で折り返さない
+(setq-default truncate-lines t)
+(setq truncate-partial-width-windows t)
+
+;;; モードラインに情報を表示
+(display-time)
+(line-number-mode 1)
+(column-number-mode 1)
+
+;;; 現在の関数名をモードラインに表示
+(which-function-mode 1)
 
 ;; load-path
 (add-to-list 'load-path "~/.emacs.d/elisp")
@@ -165,7 +186,7 @@
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
 ;;; php
-(load-library "php-mode") 
+(load-library "php-mode")
 (require 'php-mode)
 
 (add-hook 'php-mode-hook
