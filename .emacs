@@ -2,14 +2,14 @@
 	(append
 	  '((top                 . 20)
 		(left                . 20)
-		(width               . 185)
-		(height              . 48))
+		(width               . 160)
+		(height              . 40))
 		initial-frame-alist))
 
 (setq default-frame-alist
 	(append
-	  '((width               . 180)
-		(height              . 45))
+	  '((width               . 160)
+		(height              . 40))
 		default-frame-alist))
 
 (if window-system (progn
@@ -27,8 +27,12 @@
 (global-linum-mode t)
 
 
-;; 行番号を指定して移動する機能をM-zに割り当て
+;; 行番号を指定して移動する機能をM-gに割り当て
 (global-set-key "\M-g" 'goto-line)
+
+;; ファイルの最後へ移動する機能をM-downに割り当て
+(global-set-key [M-down] 'end-of-buffer)
+(global-set-key [M-up] 'beginning-of-buffer)
 
 ;; タブを挿入する
 (global-set-key "\C-i" '(lambda ()
@@ -124,6 +128,17 @@
 ; 'bold-italic
 ; '("-mona-gothic-bold-i-normal--12-110-75-75-p-60-jisx0201.1976-0"
 ;   "-mona-gothic-bold-i-normal--12-110-75-75-p-120-jisx0208.1990-0"))
+
+;; 英語
+ (set-face-attribute 'default nil
+             :family "Monaco" ;; font
+             :height 140)    ;; font size
+
+;; 日本語
+(set-fontset-font
+ nil 'japanese-jisx0208
+;; (font-spec :family "Hiragino Mincho Pro")) ;; font
+  (font-spec :family "Hiragino Kaku Gothic ProN")) ;; font
 
 ;====================================
 ;;jaspace.el を使った全角空白、タブ、改行表示モード
