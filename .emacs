@@ -34,6 +34,11 @@
 (global-set-key [M-down] 'end-of-buffer)
 (global-set-key [M-up] 'beginning-of-buffer)
 
+;; コメントアウトにC-/を割り当て
+(global-unset-key "\C-@")
+(global-set-key "\C-@" 'comment-region)
+;;(global-set-key [C-M-up] 'mark-word)
+
 ;; タブを挿入する
 (global-set-key "\C-i" '(lambda ()
   (interactive)
@@ -140,6 +145,7 @@
 ;; (font-spec :family "Hiragino Mincho Pro")) ;; font
   (font-spec :family "Hiragino Kaku Gothic ProN")) ;; font
 
+
 ;====================================
 ;;jaspace.el を使った全角空白、タブ、改行表示モード
 ;;切り替えは M-x jaspace-mode-on or -off
@@ -190,33 +196,33 @@
 (package-initialize)
 
 
-(add-to-list 'load-path "~/.emacs.d/scala-mode")
-(require 'scala-mode-auto)
+;; (add-to-list 'load-path "~/.emacs.d/scala-mode")
+;; (require 'scala-mode-auto)
 
 ;;(require 'auto-complete)
 ;;(global-auto-complete-mode t)
 
-(add-to-list 'load-path "~/.emacs.d/ensime/elisp/")
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;; (add-to-list 'load-path "~/.emacs.d/ensime/elisp/")
+;; (require 'ensime)
+;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
-;;; php
-(load-library "php-mode")
-(require 'php-mode)
+;; ;;; php
+;; (load-library "php-mode")
+;; (require 'php-mode)
 
-(add-hook 'php-mode-hook
-    '(lambda ()
-       (setq-default tab-width 4)
-       (setq indent-tabs-mode nil)
-       (setq c-basic-offset 4)))
+;; (add-hook 'php-mode-hook
+;;     '(lambda ()
+;;        (setq-default tab-width 4)
+;;        (setq indent-tabs-mode nil)
+;;        (setq c-basic-offset 4)))
 
-(add-hook 'php-mode-hook
-    '(lambda ()
-       (c-set-style "stroustrup")
-       (setq php-manual-path "/usr/share/doc/php/html")
-       (setq php-search-url  "http://www.phppro.jp/")
-       (setq php-manual-url  "http://www.phppro.jp/phpmanual")
-       (setq tab-width 4)))
+;; (add-hook 'php-mode-hook
+;;     '(lambda ()
+;;        (c-set-style "stroustrup")
+;;        (setq php-manual-path "/usr/share/doc/php/html")
+;;        (setq php-search-url  "http://www.phppro.jp/")
+;;        (setq php-manual-url  "http://www.phppro.jp/phpmanual")
+;;       (setq tab-width 4)))
 
 ; Add my private library path
 (setq load-path(append(list(expand-file-name "~/elisp/"))load-path))
@@ -239,27 +245,33 @@
 ;(sense-region-on)
 
 ;;; haskell
-(add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
+;; (add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
 
-(require 'haskell-mode)
-(require 'haskell-cabal)
+;; (require 'haskell-mode)
+;; (require 'haskell-cabal)
 
-(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
-(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
+;; (add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
+;; (add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
 
 
 ;;; JS
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(setq js2-mode-hook
-  '(lambda()
-    (setq js2-basic-offset 2)
-    (setq tab-width 2)
-))
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; (setq js2-mode-hook
+;;   '(lambda()
+;;     (setq js2-basic-offset 2)
+;;     (setq tab-width 2)
+;; ))
 
 ;;; git
-(require 'git)
-(require 'git-blame)
-(require 'vc-git)
+;; (require 'git)
+;; (require 'git-blame)
+;; (require 'vc-git)
+
+;;; simple-note
+(require 'simplenote)
+(setq simplenote-email "") ;登録したメールアドレス
+(setq simplenote-password "")      ;パスワード
+(simplenote-setup)
 
 ;;; dsvn
 ;(require 'dsvn)
@@ -309,3 +321,13 @@
 ;  ;; Your init file should contain only one such instance.
 ;  ;; If there is more than one, they won't work right.
 ; )
+
+;; mark-word-at-point
+(defun mark-word-at-point ()
+  (interactive)
+  (let ((char (char-to-string (char-after (point)))))
+    (cond
+     ((string= " " char) (delete-horizontal-space))
+     ((string-match "[\t\n -@\[-`{-~]" char) (mark-word ))
+     (t (forward-char) (backward-word) (mark-word 1)))))
+(global-set-key [C-M-up] 'mark-word-at-point)
