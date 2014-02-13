@@ -196,11 +196,12 @@
 (package-initialize)
 
 
-;; (add-to-list 'load-path "~/.emacs.d/scala-mode")
-;; (require 'scala-mode-auto)
-
 ;;(require 'auto-complete)
 ;;(global-auto-complete-mode t)
+
+;;; scala-mode
+;; (add-to-list 'load-path "~/.emacs.d/scala-mode")
+;; (require 'scala-mode-auto)
 
 ;; (add-to-list 'load-path "~/.emacs.d/ensime/elisp/")
 ;; (require 'ensime)
@@ -239,39 +240,43 @@
 (cua-mode t)
 (setq cua-enable-cua-keys nil) ;; 変なキーバインド禁止
 
+;;; markdown
+;;; if you use C-c C-c p (preview mode), you should install markdown command and set PATH.
+;;;(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
 ;;; sense-region
 ;; (install-elisp "http://taiyaki.org/elisp/sense-region/src/sense-region.el")
 ;(require 'sense-region)
 ;(sense-region-on)
 
 ;;; haskell
-;; (add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
+(add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
 
-;; (require 'haskell-mode)
-;; (require 'haskell-cabal)
+(require 'haskell-mode)
+(require 'haskell-cabal)
 
-;; (add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
-;; (add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
+(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
+(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
 
 
 ;;; JS
-;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;; (setq js2-mode-hook
-;;   '(lambda()
-;;     (setq js2-basic-offset 2)
-;;     (setq tab-width 2)
-;; ))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(setq js2-mode-hook
+  '(lambda()
+    (setq js2-basic-offset 2)
+    (setq tab-width 2)
+))
 
-;;; git
+;; ;;; git
 ;; (require 'git)
 ;; (require 'git-blame)
 ;; (require 'vc-git)
 
-;;; simple-note
-(require 'simplenote)
-(setq simplenote-email "") ;登録したメールアドレス
-(setq simplenote-password "")      ;パスワード
-(simplenote-setup)
+;; ;;; simple-note
+;; (require 'simplenote)
+;; (setq simplenote-email "test@sample.com") ;登録したメールアドレス
+;; (setq simplenote-password "")      ;パスワード
+;; (simplenote-setup)
 
 ;;; dsvn
 ;(require 'dsvn)
