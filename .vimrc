@@ -27,7 +27,7 @@ set smarttab
 set termencoding=utf-8
 set encoding=japan
 set fileencoding=utf-8
-set fileencodings=iso-2022-jp,utf-8,cp932,euc-jp
+set fileencodings=utf-8,iso-2022-jp,cp932,euc-jp
 set fenc=utf-8
 set enc=utf-8
 
