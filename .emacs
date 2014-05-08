@@ -34,10 +34,9 @@
 (global-set-key [M-down] 'end-of-buffer)
 (global-set-key [M-up] 'beginning-of-buffer)
 
-;; コメントアウトにC-/を割り当て
+;; コメントアウトにC-@を割り当て
 (global-unset-key "\C-@")
 (global-set-key "\C-@" 'comment-region)
-;;(global-set-key [C-M-up] 'mark-word)
 
 ;; タブを挿入する
 (global-set-key "\C-i" '(lambda ()
@@ -241,8 +240,7 @@
 (setq cua-enable-cua-keys nil) ;; 変なキーバインド禁止
 
 ;;; markdown
-;;; if you use C-c C-c p (preview mode), you should install markdown command and set PATH.
-;;;(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;;; sense-region
 ;; (install-elisp "http://taiyaki.org/elisp/sense-region/src/sense-region.el")
@@ -274,8 +272,8 @@
 
 ;; ;;; simple-note
 ;; (require 'simplenote)
-;; (setq simplenote-email "test@sample.com") ;登録したメールアドレス
-;; (setq simplenote-password "")      ;パスワード
+;; (setq simplenote-email "test@xx.com") ;登録したメールアドレス
+;; (setq simplenote-password "******")      ;パスワード
 ;; (simplenote-setup)
 
 ;;; dsvn
