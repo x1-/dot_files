@@ -1,14 +1,14 @@
 (setq initial-frame-alist
 	(append
 	  '((top                 . 20)
-		(left                . 20)
-		(width               . 160)
+		(left                . 200)
+		(width               . 140)
 		(height              . 40))
 		initial-frame-alist))
 
 (setq default-frame-alist
 	(append
-	  '((width               . 160)
+	  '((width               . 140)
 		(height              . 40))
 		default-frame-alist))
 
@@ -66,6 +66,9 @@
 
 ;; common lisp
 (require 'cl)
+
+;; GC設定
+(setq gc-cons-threshold 5242880)
 
 ;; C-Ret で矩形選択
 ;; 詳しいキーバインド操作：http://dev.ariel-networks.com/articles/emacs/part5/
@@ -265,6 +268,13 @@
     (setq tab-width 2)
 ))
 
+
+(add-hook 'python-mode-hook
+                   '(lambda()
+                        (setq indent-tabs-mode nil)
+                        (setq indent-level 4)
+                        (setq python-indent 4)
+                        (setq tab-width 4)))
 ;; ;;; git
 ;; (require 'git)
 ;; (require 'git-blame)
@@ -276,40 +286,7 @@
 ;; (setq simplenote-password "******")      ;パスワード
 ;; (simplenote-setup)
 
-;;; dsvn
-;(require 'dsvn)
-;(autoload 'svn-status "dsvn" "Run `svn status'." t)
-;(autoload 'svn-update "dsvn" "Run `svn update'." t)
 
-;;; psvn
-; cf. http://svn.haxx.se/dev/archive-2011-01/0369.shtml
-;(require 'psvn)
-;(require 'vc-svn)
-;(defun vc-svn-registered (file)
-;  "Check if FILE is SVN registered."
-;;;  (when (file-readable-p (expand-file-name (concat vc-svn-admin-directory
-;;;                                                 "/entries")
-;;;                                         (file-name-directory file)))
-;  (when (my-file-directory-p (expand-file-name vc-svn-admin-directory
-;                                               (file-name-directory file)))
-;    (with-temp-buffer
-;      (cd (file-name-directory file))
-;      (let* (process-file-side-effects
-;             (status
-;             (condition-case nil
-;                 ;; Ignore all errors.
-;                 (vc-svn-command t t file "status" "-v")
-;               ;; Some problem happened.  E.g. We can't find an `svn'
-;               ;; executable.  We used to only catch `file-error' but when
-;               ;; the process is run on a remote host via Tramp, the error
-;               ;; is only reported via the exit status which is turned into
-;               ;; an `error' by vc-do-command.
-;               (error nil))))
-;        (when (eq 0 status)
-;          (let ((parsed (vc-svn-parse-status file)))
-;            (and parsed (not (memq parsed '(ignored unregistered))))))))))
-;
-;(put 'downcase-region 'disabled nil)
 ;(custom-set-variables
 ;  ;; custom-set-variables was added by Custom.
 ;  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -334,3 +311,5 @@
      ((string-match "[\t\n -@\[-`{-~]" char) (mark-word ))
      (t (forward-char) (backward-word) (mark-word 1)))))
 (global-set-key [C-M-up] 'mark-word-at-point)
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
