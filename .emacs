@@ -175,8 +175,7 @@
 
 
 ;; タブの色を変更
-(set-face-foreground 'whitespace-tab "#333333")
-(set-face-background 'whitespace-tab "#003131")
+(set-face-foreground 'whitespace-tab "#000000")
 
 ; 半角スペースと改行を除外
 (dolist (d '((space-mark ?\ ) (newline-mark ?\n)))
