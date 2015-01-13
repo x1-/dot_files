@@ -43,6 +43,8 @@
   (interactive)
   (insert "\t")))
 
+(setq-default transient-mark-mode t)
+
 ;;; encoding
 (set-language-environment "Japanese")
 (prefer-coding-system 'utf-8-unix)
@@ -119,12 +121,14 @@
 ;; coloring
 (add-to-list 'load-path "~/.emacs.d/color-theme")
 (require 'color-theme)
-(load-library "~/.emacs.d/color-theme/themes/color-theme-solarized") 
+;(load-library "~/.emacs.d/color-theme/themes/color-theme-solarized")
+(load-library "~/.emacs.d/color-theme/themes/monokai-theme")
 
 (eval-after-load "color-theme"
   '(progn
      (color-theme-initialize)
-     (color-theme-solarized-dark)))
+     ;(color-theme-solarized-dark)))
+     (color-theme-monokai)))
 
 
 ;(set-face-font
@@ -165,12 +169,14 @@
 (global-whitespace-mode 1)
 ;; スペースの定義は全角スペースとする。
 (setq whitespace-space-regexp "\x3000+")
-(setq whitespace-style '(face empty tabs lines-tail trailing))
+;(setq whitespace-style '(face empty tabs lines-tail trailing))
+(setq whitespace-style '(face tabs lines-tail trailing))
 (setq whitespace-line-column 120)
+
 
 ;; タブの色を変更
 (set-face-foreground 'whitespace-tab "#333333")
-(set-face-background 'whitespace-tab "black")
+(set-face-background 'whitespace-tab "#003131")
 
 ; 半角スペースと改行を除外
 (dolist (d '((space-mark ?\ ) (newline-mark ?\n)))
