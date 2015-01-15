@@ -1,7 +1,7 @@
 (setq initial-frame-alist
 	(append
 	  '((top                 . 20)
-		(left                . 200)
+		(left                . 20)
 		(width               . 140)
 		(height              . 40))
 		initial-frame-alist))
@@ -17,28 +17,28 @@
   (add-to-list 'default-frame-alist '(background-color . "black"))
 ))
 
-;;; ƒoƒbƒNƒAƒbƒvƒtƒ@ƒCƒ‹‚ğì‚ç‚È‚¢
+;;; ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œã‚‰ãªã„
 (setq backup-inhibited t)
 
-;;; ƒc[ƒ‹ƒo[‚ğÁ‚·
+;;; ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã‚’æ¶ˆã™
 (tool-bar-mode 0)
 
 ;;; line number
 (global-linum-mode t)
 
 
-;; s”Ô†‚ğw’è‚µ‚ÄˆÚ“®‚·‚é‹@”\‚ğM-g‚ÉŠ„‚è“–‚Ä
+;; è¡Œç•ªå·ã‚’æŒ‡å®šã—ã¦ç§»å‹•ã™ã‚‹æ©Ÿèƒ½ã‚’M-gã«å‰²ã‚Šå½“ã¦
 (global-set-key "\M-g" 'goto-line)
 
-;; ƒtƒ@ƒCƒ‹‚ÌÅŒã‚ÖˆÚ“®‚·‚é‹@”\‚ğM-down‚ÉŠ„‚è“–‚Ä
+;; ãƒ•ã‚¡ã‚¤ãƒ«ã®æœ€å¾Œã¸ç§»å‹•ã™ã‚‹æ©Ÿèƒ½ã‚’M-downã«å‰²ã‚Šå½“ã¦
 (global-set-key [M-down] 'end-of-buffer)
 (global-set-key [M-up] 'beginning-of-buffer)
 
-;; ƒRƒƒ“ƒgƒAƒEƒg‚ÉC-@‚ğŠ„‚è“–‚Ä
+;; ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã«C-@ã‚’å‰²ã‚Šå½“ã¦
 (global-unset-key "\C-@")
 (global-set-key "\C-@" 'comment-region)
 
-;; ƒ^ƒu‚ğ‘}“ü‚·‚é
+;; ã‚¿ãƒ–ã‚’æŒ¿å…¥ã™ã‚‹
 (global-set-key "\C-i" '(lambda ()
   (interactive)
   (insert "\t")))
@@ -69,11 +69,11 @@
 ;; common lisp
 (require 'cl)
 
-;; GCİ’è
+;; GCè¨­å®š
 (setq gc-cons-threshold 5242880)
 
-;; C-Ret ‚Å‹éŒ`‘I‘ğ
-;; Ú‚µ‚¢ƒL[ƒoƒCƒ“ƒh‘€ìFhttp://dev.ariel-networks.com/articles/emacs/part5/
+;; C-Ret ã§çŸ©å½¢é¸æŠ
+;; è©³ã—ã„ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰æ“ä½œï¼šhttp://dev.ariel-networks.com/articles/emacs/part5/
 (cua-mode t)
 (setq cua-enable-cua-keys nil)
 
@@ -89,27 +89,27 @@
 (require 'saveplace)
 (setq-default save-place t)
 
-;;; ƒCƒ“ƒfƒ“ƒg’â~
+;;; ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆåœæ­¢
 (add-hook 'c-mode-hook
           '(lambda ()
              (c-toggle-electric-state -1)))
 
-;;; ƒXƒNƒ[ƒ‹‚ğˆês‚¸‚Â‚É‚·‚é
+;;; ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’ä¸€è¡Œãšã¤ã«ã™ã‚‹
 (setq scroll-step 1)
 
-;;; ƒXƒNƒ[ƒ‹ƒo[‚ğ‰E‘¤‚É•\¦‚·‚é
+;;; ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒãƒ¼ã‚’å³å´ã«è¡¨ç¤ºã™ã‚‹
 (set-scroll-bar-mode 'right)
 
-;;; ‰æ–Ê‰E’[‚ÅÜ‚è•Ô‚³‚È‚¢
+;;; ç”»é¢å³ç«¯ã§æŠ˜ã‚Šè¿”ã•ãªã„
 (setq-default truncate-lines t)
 (setq truncate-partial-width-windows t)
 
-;;; ƒ‚[ƒhƒ‰ƒCƒ“‚Éî•ñ‚ğ•\¦
+;;; ãƒ¢ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒ³ã«æƒ…å ±ã‚’è¡¨ç¤º
 (display-time)
 (line-number-mode 1)
 (column-number-mode 1)
 
-;;; Œ»İ‚ÌŠÖ”–¼‚ğƒ‚[ƒhƒ‰ƒCƒ“‚É•\¦
+;;; ç¾åœ¨ã®é–¢æ•°åã‚’ãƒ¢ãƒ¼ãƒ‰ãƒ©ã‚¤ãƒ³ã«è¡¨ç¤º
 (which-function-mode 1)
 
 ;; load-path
@@ -140,12 +140,12 @@
 ; '("-mona-gothic-bold-i-normal--12-110-75-75-p-60-jisx0201.1976-0"
 ;   "-mona-gothic-bold-i-normal--12-110-75-75-p-120-jisx0208.1990-0"))
 
-;; ‰pŒê
+;; è‹±èª
  (set-face-attribute 'default nil
              :family "Monaco" ;; font
              :height 140)    ;; font size
 
-;; “ú–{Œê
+;; æ—¥æœ¬èª
 (set-fontset-font
  nil 'japanese-jisx0208
 ;; (font-spec :family "Hiragino Mincho Pro")) ;; font
@@ -153,31 +153,31 @@
 
 
 ;====================================
-;;jaspace.el ‚ğg‚Á‚½‘SŠp‹ó”’Aƒ^ƒuA‰üs•\¦ƒ‚[ƒh
-;;Ø‚è‘Ö‚¦‚Í M-x jaspace-mode-on or -off
+;;jaspace.el ã‚’ä½¿ã£ãŸå…¨è§’ç©ºç™½ã€ã‚¿ãƒ–ã€æ”¹è¡Œè¡¨ç¤ºãƒ¢ãƒ¼ãƒ‰
+;;åˆ‡ã‚Šæ›¿ãˆã¯ M-x jaspace-mode-on or -off
 ;====================================
 ;(require 'jaspace)
-;;; ‘SŠp‹ó”’‚ğ•\¦‚³‚¹‚éB
-;(setq jaspace-alternate-jaspace-string " ")
-;;; ‰üs‹L†‚ğ•\¦‚³‚¹‚éB
-;(setq jaspace-alternate-eol-string "«\n")
-;;; ƒ^ƒu‹L†‚ğ•\¦B
+;;; å…¨è§’ç©ºç™½ã‚’è¡¨ç¤ºã•ã›ã‚‹ã€‚
+;(setq jaspace-alternate-jaspace-string "â–¡")
+;;; æ”¹è¡Œè¨˜å·ã‚’è¡¨ç¤ºã•ã›ã‚‹ã€‚
+;(setq jaspace-alternate-eol-string "â†“\n")
+;;; ã‚¿ãƒ–è¨˜å·ã‚’è¡¨ç¤ºã€‚
 ;(setq jaspace-highlight-tabs t)
 ;;;(setq jaspace-highlight-tabs ?^)
 ;(setq jaspace-mode t)
 
 (global-whitespace-mode 1)
-;; ƒXƒy[ƒX‚Ì’è‹`‚Í‘SŠpƒXƒy[ƒX‚Æ‚·‚éB
+;; ã‚¹ãƒšãƒ¼ã‚¹ã®å®šç¾©ã¯å…¨è§’ã‚¹ãƒšãƒ¼ã‚¹ã¨ã™ã‚‹ã€‚
 (setq whitespace-space-regexp "\x3000+")
 ;(setq whitespace-style '(face empty tabs lines-tail trailing))
 (setq whitespace-style '(face tabs lines-tail trailing))
 (setq whitespace-line-column 120)
 
 
-;; ƒ^ƒu‚ÌF‚ğ•ÏX
+;; ã‚¿ãƒ–ã®è‰²ã‚’å¤‰æ›´
 (set-face-foreground 'whitespace-tab "#000000")
 
-; ”¼ŠpƒXƒy[ƒX‚Æ‰üs‚ğœŠO
+; åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã¨æ”¹è¡Œã‚’é™¤å¤–
 (dolist (d '((space-mark ?\ ) (newline-mark ?\n)))
   (setq whitespace-display-mappings
         (delete-if
@@ -185,12 +185,12 @@
                            (eq (cadr d) (cadr e))))
          whitespace-display-mappings)))
 
-;; ‘SŠpƒXƒy[ƒX‚Æ‰üs‚ğ’Ç‰Á
-;(dolist (e '((space-mark   ?\x3000 [?\ ])
+;; å…¨è§’ã‚¹ãƒšãƒ¼ã‚¹ã¨æ”¹è¡Œã‚’è¿½åŠ 
+;(dolist (e '((space-mark   ?\x3000 [?\â–¡])
 ;             (newline-mark ?\n     [?\u21B5 ?\n] [?$ ?\n])))
 ;  (add-to-list 'whitespace-display-mappings e))
 
-;; ‹­’²‚µ‚½‚­‚È‚¢—v‘f‚ğíœ
+;; å¼·èª¿ã—ãŸããªã„è¦ç´ ã‚’å‰Šé™¤
 ;(dolist (d '(face lines space-before-tab
 ;                  indentation empty space-after-tab tab-mark))
 ;  (setq whitespace-style (delq d whitespace-style)))
@@ -245,7 +245,7 @@
 
 ;;; rectangle
 (cua-mode t)
-(setq cua-enable-cua-keys nil) ;; •Ï‚ÈƒL[ƒoƒCƒ“ƒh‹Ö~
+(setq cua-enable-cua-keys nil) ;; å¤‰ãªã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰ç¦æ­¢
 
 ;;; markdown
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
@@ -261,8 +261,8 @@
 (require 'haskell-mode)
 (require 'haskell-cabal)
 
-(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc —p
-(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell —p
+(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc ç”¨
+(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell ç”¨
 
 
 ;;; JS
@@ -287,8 +287,8 @@
 
 ;; ;;; simple-note
 ;; (require 'simplenote)
-;; (setq simplenote-email "test@xx.com") ;“o˜^‚µ‚½ƒ[ƒ‹ƒAƒhƒŒƒX
-;; (setq simplenote-password "******")      ;ƒpƒXƒ[ƒh
+;; (setq simplenote-email "test@xx.com") ;ç™»éŒ²ã—ãŸãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
+;; (setq simplenote-password "******")      ;ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
 ;; (simplenote-setup)
 
 
