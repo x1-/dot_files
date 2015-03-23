@@ -28,3 +28,11 @@ local.properties
 #OSX
 .DS_Store
 ._*
+
+#tmux
+.tmux/resurrect/
+
+#emacs
+.emacs.d/auto-save-list
+\#*\#
+.\#*
