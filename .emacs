@@ -1,16 +1,16 @@
 (setq initial-frame-alist
-	(append
-	  '((top                 . 20)
-		(left                . 20)
-		(width               . 140)
-		(height              . 40))
-		initial-frame-alist))
+  (append
+    '((top                 . 40)
+      (left                . 80)
+      (width               . 174)
+      (height              . 54))
+       initial-frame-alist))
 
 (setq default-frame-alist
-	(append
-	  '((width               . 140)
-		(height              . 40))
-		default-frame-alist))
+  (append
+    '((width               . 174)
+      (height              . 54))
+       default-frame-alist))
 
 (if window-system (progn
   (add-to-list 'default-frame-alist '(foreground-color . "white"))
@@ -31,8 +31,8 @@
 (global-set-key "\M-g" 'goto-line)
 
 ;; ファイルの最後へ移動する機能をM-downに割り当て
-(global-set-key [M-down] 'end-of-buffer)
-(global-set-key [M-up] 'beginning-of-buffer)
+(global-set-key [C-M-down] 'end-of-buffer)
+(global-set-key [C-M-up] 'beginning-of-buffer)
 
 ;; コメントアウトにC-@を割り当て
 (global-unset-key "\C-@")
@@ -62,8 +62,8 @@
 
 ;;; use clip-board
 (cond
-	(window-system
-		(setq x-select-enable-clipboard t)))
+  (window-system
+    (setq x-select-enable-clipboard t)))
 
 
 ;; common lisp
@@ -112,6 +112,9 @@
 ;;; 現在の関数名をモードラインに表示
 (which-function-mode 1)
 
+;; カレントディレクトリをホームディレクトリに設定
+(cd "~/")
+
 ;; load-path
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (require 'install-elisp)
@@ -119,16 +122,16 @@
 
 
 ;; coloring
-(add-to-list 'load-path "~/.emacs.d/color-theme")
-(require 'color-theme)
+;(add-to-list 'load-path "~/.emacs.d/color-theme")
+;(require 'color-theme)
 ;(load-library "~/.emacs.d/color-theme/themes/color-theme-solarized")
-(load-library "~/.emacs.d/color-theme/themes/monokai-theme")
+;(load-library "~/.emacs.d/color-theme/themes/monokai-theme")
 
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     ;(color-theme-solarized-dark)))
-     (color-theme-monokai)))
+;(eval-after-load "color-theme"
+;  '(progn
+;     (color-theme-initialize)
+;     ;(color-theme-solarized-dark)))
+;     (color-theme-monokai)))
 
 
 ;(set-face-font
@@ -143,7 +146,7 @@
 ;; 英語
  (set-face-attribute 'default nil
              :family "Monaco" ;; font
-             :height 140)    ;; font size
+             :height 160)    ;; font size
 
 ;; 日本語
 (set-fontset-font
@@ -151,6 +154,16 @@
 ;; (font-spec :family "Hiragino Mincho Pro")) ;; font
   (font-spec :family "Hiragino Kaku Gothic ProN")) ;; font
 
+
+;; direx
+;(require 'popwin)
+;(require 'direx)
+;(setq direx:leaf-icon "  "
+;      direx:open-icon "▾ "
+;      direx:closed-icon "▸ ")
+;(push '(direx:direx-mode :position left :width 25 :dedicated t)
+;      popwin:special-display-config)
+;(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
 
 ;====================================
 ;;jaspace.el を使った全角空白、タブ、改行表示モード
@@ -256,24 +269,24 @@
 ;(sense-region-on)
 
 ;;; haskell
-(add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
+;(add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
+;
+;(require 'haskell-mode)
+;(require 'haskell-cabal)
 
-(require 'haskell-mode)
-(require 'haskell-cabal)
-
-(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
-(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
+;(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
+;(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
 
 
 ;;; JS
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(setq js2-mode-hook
-  '(lambda()
-    (setq js2-basic-offset 2)
-    (setq tab-width 2)
-))
-
-
+;(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;(setq js2-mode-hook
+;  '(lambda()
+;    (setq js2-basic-offset 2)
+;    (setq tab-width 2)
+;))
+;
+;
 (add-hook 'python-mode-hook
                    '(lambda()
                         (setq indent-tabs-mode nil)
@@ -315,6 +328,25 @@
      ((string= " " char) (delete-horizontal-space))
      ((string-match "[\t\n -@\[-`{-~]" char) (mark-word ))
      (t (forward-char) (backward-word) (mark-word 1)))))
-(global-set-key [C-M-up] 'mark-word-at-point)
+(global-set-key [M-up] 'mark-word-at-point)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values (quote ((encoding . utf-8)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(defun backward-kill-word-or-kill-region ()
+  (interactive)
+  (if (or (not transient-mark-mode) (region-active-p))
+      (kill-region (region-beginning) (region-end))
+    (backward-kill-word 1)))
+(global-set-key "\C-w" 'backward-kill-word-or-kill-region)
