@@ -121,7 +121,7 @@
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 
 
-; coloring
+;; coloring
 ;(add-to-list 'load-path "~/.emacs.d/color-theme")
 ;(require 'color-theme)
 ;;(load-library "~/.emacs.d/color-theme/themes/color-theme-solarized")
@@ -156,17 +156,17 @@
 
 
 (set-face-attribute 'default nil
-                    :family "Ricty Diminished Discord"
+                    :family "Ricty Diminished"
                     :height 180)
 (set-fontset-font (frame-parameter nil 'font)
                   'japanese-jisx0208
-                  (cons "Ricty Diminished Discord" "iso10646-1"))
+                  (cons "Ricty Diminished" "iso10646-1"))
 (set-fontset-font (frame-parameter nil 'font)
                   'japanese-jisx0212
-                  (cons "Ricty Diminished Discord" "iso10646-1"))
+                  (cons "Ricty Diminished" "iso10646-1"))
 (set-fontset-font (frame-parameter nil 'font)
                   'katakana-jisx0201
-                  (cons "Ricty Diminished Discord" "iso10646-1"))
+                  (cons "Ricty Diminished" "iso10646-1"))
 
 
 ;; direx
