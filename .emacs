@@ -1,15 +1,15 @@
 (setq initial-frame-alist
   (append
-    '((top                 . 40)
-      (left                . 80)
-      (width               . 174)
-      (height              . 54))
+    '((top                 . 20)
+      (left                . 20)
+      (width               . 100)
+      (height              . 40))
        initial-frame-alist))
 
 (setq default-frame-alist
   (append
-    '((width               . 174)
-      (height              . 54))
+    '((width               . 100)
+      (height              . 40))
        default-frame-alist))
 
 (if window-system (progn
@@ -121,12 +121,12 @@
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 
 
-;; coloring
+; coloring
 ;(add-to-list 'load-path "~/.emacs.d/color-theme")
 ;(require 'color-theme)
-;(load-library "~/.emacs.d/color-theme/themes/color-theme-solarized")
+;;(load-library "~/.emacs.d/color-theme/themes/color-theme-solarized")
 ;(load-library "~/.emacs.d/color-theme/themes/monokai-theme")
-
+;
 ;(eval-after-load "color-theme"
 ;  '(progn
 ;     (color-theme-initialize)
@@ -143,27 +143,41 @@
 ; '("-mona-gothic-bold-i-normal--12-110-75-75-p-60-jisx0201.1976-0"
 ;   "-mona-gothic-bold-i-normal--12-110-75-75-p-120-jisx0208.1990-0"))
 
-;; 英語
- (set-face-attribute 'default nil
-             :family "Monaco" ;; font
-             :height 160)    ;; font size
+;;; 英語
+; (set-face-attribute 'default nil
+;             :family "Monaco" ;; font
+;             :height 160)    ;; font size
+;
+;;; 日本語
+;(set-fontset-font
+; nil 'japanese-jisx0208
+;;; (font-spec :family "Hiragino Mincho Pro")) ;; font
+;  (font-spec :family "Hiragino Kaku Gothic ProN")) ;; font
 
-;; 日本語
-(set-fontset-font
- nil 'japanese-jisx0208
-;; (font-spec :family "Hiragino Mincho Pro")) ;; font
-  (font-spec :family "Hiragino Kaku Gothic ProN")) ;; font
+
+(set-face-attribute 'default nil
+                    :family "Ricty Diminished Discord"
+                    :height 180)
+(set-fontset-font (frame-parameter nil 'font)
+                  'japanese-jisx0208
+                  (cons "Ricty Diminished Discord" "iso10646-1"))
+(set-fontset-font (frame-parameter nil 'font)
+                  'japanese-jisx0212
+                  (cons "Ricty Diminished Discord" "iso10646-1"))
+(set-fontset-font (frame-parameter nil 'font)
+                  'katakana-jisx0201
+                  (cons "Ricty Diminished Discord" "iso10646-1"))
 
 
 ;; direx
-;(require 'popwin)
-;(require 'direx)
-;(setq direx:leaf-icon "  "
-;      direx:open-icon "▾ "
-;      direx:closed-icon "▸ ")
-;(push '(direx:direx-mode :position left :width 25 :dedicated t)
-;      popwin:special-display-config)
-;(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
+(require 'popwin)
+(require 'direx)
+(setq direx:leaf-icon "  "
+      direx:open-icon "▾ "
+      direx:closed-icon "▸ ")
+(push '(direx:direx-mode :position left :width 25 :dedicated t)
+      popwin:special-display-config)
+(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
 
 ;====================================
 ;;jaspace.el を使った全角空白、タブ、改行表示モード
@@ -285,8 +299,8 @@
 ;    (setq js2-basic-offset 2)
 ;    (setq tab-width 2)
 ;))
-;
-;
+
+
 (add-hook 'python-mode-hook
                    '(lambda()
                         (setq indent-tabs-mode nil)
