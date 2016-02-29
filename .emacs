@@ -122,76 +122,27 @@
 
 
 ;; coloring
-;(add-to-list 'load-path "~/.emacs.d/color-theme")
-;(require 'color-theme)
+(add-to-list 'load-path "~/.emacs.d/color-theme")
+(require 'color-theme)
 ;;(load-library "~/.emacs.d/color-theme/themes/color-theme-solarized")
-;(load-library "~/.emacs.d/color-theme/themes/monokai-theme")
-;
-;(eval-after-load "color-theme"
-;  '(progn
-;     (color-theme-initialize)
-;     ;(color-theme-solarized-dark)))
-;     (color-theme-monokai)))
+(load-library "~/.emacs.d/color-theme/themes/monokai-theme")
+
+(eval-after-load "color-theme"
+  '(progn
+     (color-theme-initialize)
+     ;(color-theme-solarized-dark)))
+     (color-theme-monokai)))
 
 
-;(set-face-font
-;  'italic
-;  '("-mona-gothic-medium-i-normal--12-110-75-75-p-60-jisx0201.1976-0"
-;   "-mona-gothic-medium-i-normal--12-110-75-75-p-120-jisx0208.1990-0"))
-;(set-face-font
-; 'bold-italic
-; '("-mona-gothic-bold-i-normal--12-110-75-75-p-60-jisx0201.1976-0"
-;   "-mona-gothic-bold-i-normal--12-110-75-75-p-120-jisx0208.1990-0"))
+;;; list-packages
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
 
-;;; 英語
-; (set-face-attribute 'default nil
-;             :family "Monaco" ;; font
-;             :height 160)    ;; font size
-;
-;;; 日本語
-;(set-fontset-font
-; nil 'japanese-jisx0208
-;;; (font-spec :family "Hiragino Mincho Pro")) ;; font
-;  (font-spec :family "Hiragino Kaku Gothic ProN")) ;; font
+; Add my private library path
+(setq load-path(append(list(expand-file-name "~/elisp/"))load-path))
 
-
-(set-face-attribute 'default nil
-                    :family "Ricty Diminished"
-                    :height 180)
-(set-fontset-font (frame-parameter nil 'font)
-                  'japanese-jisx0208
-                  (cons "Ricty Diminished" "iso10646-1"))
-(set-fontset-font (frame-parameter nil 'font)
-                  'japanese-jisx0212
-                  (cons "Ricty Diminished" "iso10646-1"))
-(set-fontset-font (frame-parameter nil 'font)
-                  'katakana-jisx0201
-                  (cons "Ricty Diminished" "iso10646-1"))
-
-
-;; direx
-(require 'popwin)
-(require 'direx)
-(setq direx:leaf-icon "  "
-      direx:open-icon "▾ "
-      direx:closed-icon "▸ ")
-(push '(direx:direx-mode :position left :width 25 :dedicated t)
-      popwin:special-display-config)
-(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
-
-;====================================
-;;jaspace.el を使った全角空白、タブ、改行表示モード
-;;切り替えは M-x jaspace-mode-on or -off
-;====================================
-;(require 'jaspace)
-;;; 全角空白を表示させる。
-;(setq jaspace-alternate-jaspace-string "□")
-;;; 改行記号を表示させる。
-;(setq jaspace-alternate-eol-string "↓\n")
-;;; タブ記号を表示。
-;(setq jaspace-highlight-tabs t)
-;;;(setq jaspace-highlight-tabs ?^)
-;(setq jaspace-mode t)
 
 (global-whitespace-mode 1)
 ;; スペースの定義は全角スペースとする。
@@ -212,26 +163,41 @@
                            (eq (cadr d) (cadr e))))
          whitespace-display-mappings)))
 
-;; 全角スペースと改行を追加
-;(dolist (e '((space-mark   ?\x3000 [?\□])
-;             (newline-mark ?\n     [?\u21B5 ?\n] [?$ ?\n])))
-;  (add-to-list 'whitespace-display-mappings e))
 
-;; 強調したくない要素を削除
-;(dolist (d '(face lines space-before-tab
-;                  indentation empty space-after-tab tab-mark))
-;  (setq whitespace-style (delq d whitespace-style)))
+;;; rectangle
+(cua-mode t)
+(setq cua-enable-cua-keys nil) ;; 変なキーバインド禁止
 
 
-;;; list-packages
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
+
+(when (display-graphic-p)
+    (set-face-attribute 'default nil
+                        :family "Ricty Diminished"
+                        :height 180)
+    (set-fontset-font (frame-parameter nil 'font)
+                      'japanese-jisx0208
+                      (cons "Ricty Diminished" "iso10646-1"))
+    (set-fontset-font (frame-parameter nil 'font)
+                      'japanese-jisx0212
+                      (cons "Ricty Diminished" "iso10646-1"))
+    (set-fontset-font (frame-parameter nil 'font)
+                      'katakana-jisx0201
+                      (cons "Ricty Diminished" "iso10646-1"))
+)
+
+;; direx
+(require 'popwin)
+(require 'direx)
+(setq direx:leaf-icon "  "
+      direx:open-icon "▾ "
+      direx:closed-icon "▸ ")
+(push '(direx:direx-mode :position left :width 25 :dedicated t)
+      popwin:special-display-config)
+(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
 
 
-;;(require 'auto-complete)
-;;(global-auto-complete-mode t)
+;;; markdown
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;;; scala-mode
 ;; (add-to-list 'load-path "~/.emacs.d/scala-mode")
@@ -259,28 +225,6 @@
 ;;        (setq php-manual-url  "http://www.phppro.jp/phpmanual")
 ;;       (setq tab-width 4)))
 
-; Add my private library path
-(setq load-path(append(list(expand-file-name "~/elisp/"))load-path))
-;
-; Show line number
-;
-;(require 'wb-line-number)
-;(setq truncate-partial-width-windows nil)
-;(set-scroll-bar-mode nil)
-;(setq wb-line-number-scroll-bar t)
-;(wb-line-number-toggle)
-
-;;; rectangle
-(cua-mode t)
-(setq cua-enable-cua-keys nil) ;; 変なキーバインド禁止
-
-;;; markdown
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
-;;; sense-region
-;; (install-elisp "http://taiyaki.org/elisp/sense-region/src/sense-region.el")
-;(require 'sense-region)
-;(sense-region-on)
 
 ;;; haskell
 ;(add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
@@ -334,7 +278,7 @@
 ;  ;; If there is more than one, they won't work right.
 ; )
 
-;; mark-word-at-point
+; mark-word-at-point
 (defun mark-word-at-point ()
   (interactive)
   (let ((char (char-to-string (char-after (point)))))
@@ -364,3 +308,4 @@
       (kill-region (region-beginning) (region-end))
     (backward-kill-word 1)))
 (global-set-key "\C-w" 'backward-kill-word-or-kill-region)
+
