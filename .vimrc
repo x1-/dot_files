@@ -4,7 +4,10 @@ syntax enable
 "colorscheme desert
 "colorscheme murphy
 "colorscheme jellybeans
+let g:hybrid_use_iTerm_colors = 1
 colorscheme hybrid
+syntax on
+"colorscheme hybrid
 
 "set background=dark
 "colorscheme solarized
