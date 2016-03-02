@@ -15,17 +15,19 @@
 (if window-system (progn
   (add-to-list 'default-frame-alist '(foreground-color . "white"))
   (add-to-list 'default-frame-alist '(background-color . "black"))
+  ;;; ツールバーを消す
+  (tool-bar-mode 0)
+  ;;; クリップボード
+  (setq x-select-enable-clipboard t)
 ))
 
 ;;; バックアップファイルを作らない
 (setq backup-inhibited t)
 
-;;; ツールバーを消す
-(tool-bar-mode 0)
-
 ;;; line number
 (global-linum-mode t)
-
+(custom-set-faces
+  '(linum ((t (:inherit (shadow default) :foreground "brightblue")))))
 
 ;; 行番号を指定して移動する機能をM-gに割り当て
 (global-set-key "\M-g" 'goto-line)
@@ -34,16 +36,12 @@
 (global-set-key [C-M-down] 'end-of-buffer)
 (global-set-key [C-M-up] 'beginning-of-buffer)
 
-;; コメントアウトにC-@を割り当て
-(global-unset-key "\C-@")
-(global-set-key "\C-@" 'comment-region)
-
 ;; タブを挿入する
-(global-set-key "\C-i" '(lambda ()
-  (interactive)
-  (insert "\t")))
+;(global-set-key "\C-i" '(lambda ()
+;  (interactive)
+;  (insert "\t")))
 
-(setq-default transient-mark-mode t)
+;(setq-default transient-mark-mode t)
 
 ;;; encoding
 (set-language-environment "Japanese")
@@ -60,13 +58,7 @@
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
                       64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
 
-;;; use clip-board
-(cond
-  (window-system
-    (setq x-select-enable-clipboard t)))
-
-
-;; common lisp
+;;; common lisp
 (require 'cl)
 
 ;; GC設定
@@ -254,46 +246,46 @@
 ;; (add-to-list 'load-path "~/.emacs.d/scala-mode")
 ;; (require 'scala-mode-auto)
 
-;; (add-to-list 'load-path "~/.emacs.d/ensime/elisp/")
-;; (require 'ensime)
-;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;;; (add-to-list 'load-path "~/.emacs.d/ensime/elisp/")
+;;; (require 'ensime)
+;;; (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
-;; ;;; php
-;; (load-library "php-mode")
-;; (require 'php-mode)
+;;; ;;; php
+;;; (load-library "php-mode")
+;;; (require 'php-mode)
 
-;; (add-hook 'php-mode-hook
-;;     '(lambda ()
-;;        (setq-default tab-width 4)
-;;        (setq indent-tabs-mode nil)
-;;        (setq c-basic-offset 4)))
+;;; (add-hook 'php-mode-hook
+;;;     '(lambda ()
+;;;        (setq-default tab-width 4)
+;;;        (setq indent-tabs-mode nil)
+;;;        (setq c-basic-offset 4)))
 
-;; (add-hook 'php-mode-hook
-;;     '(lambda ()
-;;        (c-set-style "stroustrup")
-;;        (setq php-manual-path "/usr/share/doc/php/html")
-;;        (setq php-search-url  "http://www.phppro.jp/")
-;;        (setq php-manual-url  "http://www.phppro.jp/phpmanual")
-;;       (setq tab-width 4)))
-
-
-;;; haskell
-;(add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
-;
-;(require 'haskell-mode)
-;(require 'haskell-cabal)
-
-;(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
-;(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
+;;; (add-hook 'php-mode-hook
+;;;     '(lambda ()
+;;;        (c-set-style "stroustrup")
+;;;        (setq php-manual-path "/usr/share/doc/php/html")
+;;;        (setq php-search-url  "http://www.phppro.jp/")
+;;;        (setq php-manual-url  "http://www.phppro.jp/phpmanual")
+;;;       (setq tab-width 4)))
 
 
-;;; JS
-;(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;(setq js2-mode-hook
-;  '(lambda()
-;    (setq js2-basic-offset 2)
-;    (setq tab-width 2)
-;))
+;;;; haskell
+;;(add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
+;;
+;;(require 'haskell-mode)
+;;(require 'haskell-cabal)
+
+;;(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
+;;(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
+
+
+;;;; JS
+;;(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;;(setq js2-mode-hook
+;;  '(lambda()
+;;    (setq js2-basic-offset 2)
+;;    (setq tab-width 2)
+;;))
 
 
 (add-hook 'python-mode-hook
@@ -302,32 +294,31 @@
                         (setq indent-level 4)
                         (setq python-indent 4)
                         (setq tab-width 4)))
-;; ;;; git
-;; (require 'git)
-;; (require 'git-blame)
-;; (require 'vc-git)
+;;; ;;; git
+;;; (require 'git)
+;;; (require 'git-blame)
+;;; (require 'vc-git)
 
-;; ;;; simple-note
-;; (require 'simplenote)
-;; (setq simplenote-email "test@xx.com") ;登録したメールアドレス
-;; (setq simplenote-password "******")      ;パスワード
-;; (simplenote-setup)
+;;; ;;; simple-note
+;;; (require 'simplenote)
+;;; (setq simplenote-email "test@xx.com") ;登録したメールアドレス
+;;; (setq simplenote-password "******")      ;パスワード
+;;; (simplenote-setup)
 
-
-;(custom-set-variables
-;  ;; custom-set-variables was added by Custom.
-;  ;; If you edit it by hand, you could mess it up, so be careful.
-;  ;; Your init file should contain only one such instance.
-;  ;; If there is more than one, they won't work right.
-; '(column-number-mode t)
-; '(cua-mode t nil (cua-base))
-; '(show-paren-mode t))
-;(custom-set-faces
-;  ;; custom-set-faces was added by Custom.
-;  ;; If you edit it by hand, you could mess it up, so be careful.
-;  ;; Your init file should contain only one such instance.
-;  ;; If there is more than one, they won't work right.
-; )
+;;(custom-set-variables
+;;  ;; custom-set-variables was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;; '(column-number-mode t)
+;; '(cua-mode t nil (cua-base))
+;; '(show-paren-mode t))
+;;(custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;; )
 
 ; mark-word-at-point
 (defun mark-word-at-point ()
