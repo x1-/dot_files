@@ -17,8 +17,20 @@
   (add-to-list 'default-frame-alist '(background-color . "black"))
   ;;; ツールバーを消す
   (tool-bar-mode 0)
+  ;;; スクロールバーを右側に表示する
+  (set-scroll-bar-mode 'right)
   ;;; クリップボード
   (setq x-select-enable-clipboard t)
+
+  ; coloring
+  (add-to-list 'load-path "~/.emacs.d/color-theme")
+  (require 'color-theme)
+  (load-library "~/.emacs.d/color-theme/themes/monokai-theme")
+
+  (eval-after-load "color-theme"
+    '(progn
+       (color-theme-initialize)
+       (color-theme-monokai)))
 ))
 
 ;;; バックアップファイルを作らない
@@ -28,18 +40,15 @@
 (global-linum-mode t)
 (custom-set-faces
   '(linum ((t (:inherit (shadow default) :foreground "brightblue")))))
+(setq linum-format "%4d  ")
 
-;; 行番号を指定して移動する機能をM-gに割り当て
+;;; 行番号を指定して移動する機能をM-gに割り当て
 (global-set-key "\M-g" 'goto-line)
 
-;; ファイルの最後へ移動する機能をM-downに割り当て
-(global-set-key [C-M-down] 'end-of-buffer)
-(global-set-key [C-M-up] 'beginning-of-buffer)
-
-;; タブを挿入する
-;(global-set-key "\C-i" '(lambda ()
-;  (interactive)
-;  (insert "\t")))
+;;; タブを挿入する
+(global-set-key "\C-i" '(lambda ()
+  (interactive)
+  (insert "\t")))
 
 ;(setq-default transient-mark-mode t)
 
@@ -61,13 +70,8 @@
 ;;; common lisp
 (require 'cl)
 
-;; GC設定
+;;; GC設定
 (setq gc-cons-threshold 5242880)
-
-;; C-Ret で矩形選択
-;; 詳しいキーバインド操作：http://dev.ariel-networks.com/articles/emacs/part5/
-(cua-mode t)
-(setq cua-enable-cua-keys nil)
 
 ;;; ()
 (show-paren-mode 1)
@@ -81,6 +85,11 @@
 (require 'saveplace)
 (setq-default save-place t)
 
+;;; cua-mode
+(cua-mode t)
+(setq cua-enable-cua-keys nil) ; デフォルトキーバインドを無効化
+(define-key global-map (kbd "C-x SPC") 'cua-rectangle-mark-mode)
+
 ;;; インデント停止
 (add-hook 'c-mode-hook
           '(lambda ()
@@ -88,9 +97,6 @@
 
 ;;; スクロールを一行ずつにする
 (setq scroll-step 1)
-
-;;; スクロールバーを右側に表示する
-(set-scroll-bar-mode 'right)
 
 ;;; 画面右端で折り返さない
 (setq-default truncate-lines t)
@@ -104,27 +110,19 @@
 ;;; 現在の関数名をモードラインに表示
 (which-function-mode 1)
 
-;; カレントディレクトリをホームディレクトリに設定
+;;; カレントディレクトリをホームディレクトリに設定
 (cd "~/")
 
-;; load-path
+;;; load-path
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (require 'install-elisp)
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 
-
-;; coloring
-(add-to-list 'load-path "~/.emacs.d/color-theme")
-(require 'color-theme)
-;;(load-library "~/.emacs.d/color-theme/themes/color-theme-solarized")
-(load-library "~/.emacs.d/color-theme/themes/monokai-theme")
-
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     ;(color-theme-solarized-dark)))
-     (color-theme-monokai)))
-
+;;; カーソル行
+(global-hl-line-mode t)
+(set-face-background 'hl-line "color-232")
+(set-face-background 'region "#808080")
+(set-face-foreground 'region "#0000ff")
 
 ;;; list-packages
 (require 'package)
@@ -132,34 +130,25 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
-; Add my private library path
-(setq load-path(append(list(expand-file-name "~/elisp/"))load-path))
-
 
 (global-whitespace-mode 1)
-;; スペースの定義は全角スペースとする。
+;;; スペースの定義は全角スペースとする。
 (setq whitespace-space-regexp "\x3000+")
 ;(setq whitespace-style '(face empty tabs lines-tail trailing))
 (setq whitespace-style '(face tabs lines-tail trailing))
 (setq whitespace-line-column 120)
 
 
-;; タブの色を変更
+;;; タブの色を変更
 (set-face-foreground 'whitespace-tab "#000000")
 
-; 半角スペースと改行を除外
+;;; 半角スペースと改行を除外
 (dolist (d '((space-mark ?\ ) (newline-mark ?\n)))
   (setq whitespace-display-mappings
-        (delete-if
-         '(lambda (e) (and (eq (car d) (car e))
-                           (eq (cadr d) (cadr e))))
-         whitespace-display-mappings)))
-
-
-;;; rectangle
-(cua-mode t)
-(setq cua-enable-cua-keys nil) ;; 変なキーバインド禁止
-
+    (delete-if
+     '(lambda (e) (and (eq (car d) (car e))
+                       (eq (cadr d) (cadr e))))
+     whitespace-display-mappings)))
 
 
 (when (display-graphic-p)
@@ -177,7 +166,21 @@
                       (cons "Ricty Diminished" "iso10646-1"))
 )
 
-;; direx
+;;; OSX
+;(require 'pbcopy)
+(defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil))
+  (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+    (process-send-string proc text)
+    (process-send-eof proc))))
+
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
+
+;;; direx
 (require 'popwin)
 (require 'direx)
 (setq direx:leaf-icon "  "
@@ -233,7 +236,6 @@
                                helm-source-emacs-commands-history
                                helm-source-emacs-commands
                                )))
-
 (define-key global-map (kbd "C-;") 'helm-mini)
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
@@ -294,6 +296,7 @@
                         (setq indent-level 4)
                         (setq python-indent 4)
                         (setq tab-width 4)))
+
 ;;; ;;; git
 ;;; (require 'git)
 ;;; (require 'git-blame)
