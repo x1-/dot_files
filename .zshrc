@@ -3,18 +3,18 @@
 ########################################
 # 環境変数
 export LANG=ja_JP.UTF-8
- 
- 
+
+
 # 色を使用出来るようにする
 autoload -Uz colors
 colors
- 
+
 # emacs 風キーバインドにする
 bindkey -e
 bindkey "^[[3~" delete-char
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
- 
+
 # ヒストリの設定
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
@@ -125,23 +125,33 @@ bindkey '^R' history-incremental-pattern-search-backward
  
 ########################################
 # エイリアス
- 
+
 alias la='ls -a'
 alias ll='ls -l'
- 
+
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
- 
+
 alias mkdir='mkdir -p'
- 
+#alias git='hub'
+
 # sudo の後のコマンドでエイリアスを有効にする
 alias sudo='sudo '
- 
+
 # グローバルエイリアス
 alias -g L='| less'
 alias -g G='| grep'
- 
+
+alias -g P='| peco'
+if [ -x "`which peco`" ]; then
+  alias ll='ls -la | peco'
+  alias tp='top | peco'
+  alias pp='ps aux | peco'
+fi
+
+alias emacs="TERM=xterm-256color reattach-to-user-namespace /usr/local/bin/emacs"
+
 # C で標準出力をクリップボードにコピーする
 # mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
 if which pbcopy >/dev/null 2>&1 ; then
@@ -168,5 +178,66 @@ case ${OSTYPE} in
         #Linux用の設定
         ;;
 esac
- 
+
+### jvm
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
+export M2_HOME=~/tools/maven
+export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512M"
+
 # vim:set ft=zsh:
+export PATH="/Users/a12884/bin:$JAVA_HOME/bin:$PATH:$HOME/tools/scala/bin:$HOME/tools/jad"
+
+# hadoop
+export PATH="/usr/local/hadoop/bin-mapreduce1:$PATH"
+
+### rbenv(for ruby) ###
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
+##PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+#
+#if [ -n "$TMUX" ]; then
+#  export PATH=$HOME/.rbenv/shims:$PATH
+#fi
+
+#unset LD_LIBRARY_PATH
+unset DYLD_LIBRARY_PATH
+LD_LIBRARY_PATH=/usr/local/lib
+
+### tmuxinator ###
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+
+
+### home brew
+export HOMEBREW_GITHUB_API_TOKEN=9f78ecb949d5eebfb866d7544f2b2590212bc50e
+
+### php
+#export PHP_VERSIONS=$HOME/local/php/versions
+#source $(brew --prefix php-version)/php-version.sh && php-version 5.6.1 >/dev/null
+
+### virtualenv
+which virtualenvwrapper.sh > /dev/null
+if [ $? -eq 0 ]; then
+    source `which virtualenvwrapper.sh`
+    mkdir -p ~/.virtualenvs
+    export WORKON_HOME=~/.virtualenvs
+    export PIP_RESPECT_VIRTUALENV=true
+fi
+
+### pythonz
+[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
+PYTHONZ_ROOT=~/.pythonz
+# Pythonz
+if [ -s $HOME/.pythonz/etc/bashrc ]; then
+    source $HOME/.pythonz/etc/bashrc
+fi
+
+export EDITOR=/usr/bin/vim
+export SHELL=/bin/zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/a12884/tools/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables bash completion for gcloud.
+#source '/Users/a12884/tools/google-cloud-sdk/completion.zsh.inc'
