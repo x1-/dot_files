@@ -46,9 +46,16 @@
 (global-set-key "\M-g" 'goto-line)
 
 ;;; タブを挿入する
-(global-set-key "\C-i" '(lambda ()
+;(global-set-key "\C-i" '(lambda ()
+(global-set-key [tab] '(lambda ()
   (interactive)
   (insert "\t")))
+
+;;; 置換
+(define-key global-map (kbd "M-s s")     'replace-string)
+
+;;; 正規表現置換
+(define-key global-map (kbd "M-s r")     'replace-regexp)
 
 (setq-default transient-mark-mode t)
 
