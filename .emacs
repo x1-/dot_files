@@ -21,16 +21,6 @@
   (set-scroll-bar-mode 'right)
   ;;; クリップボード
   (setq x-select-enable-clipboard t)
-
-  ; coloring
-  (add-to-list 'load-path "~/.emacs.d/color-theme")
-  (require 'color-theme)
-  (load-library "~/.emacs.d/color-theme/themes/monokai-theme")
-
-  (eval-after-load "color-theme"
-    '(progn
-       (color-theme-initialize)
-       (color-theme-monokai)))
 ))
 
 ;;; バックアップファイルを作らない
@@ -38,8 +28,6 @@
 
 ;;; line number
 (global-linum-mode t)
-(custom-set-faces
-  '(linum ((t (:inherit (shadow default) :foreground "brightblue")))))
 (setq linum-format "%4d  ")
 
 ;;; 行番号を指定して移動する機能をM-gに割り当て
@@ -118,11 +106,26 @@
 (require 'install-elisp)
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 
+;;; theme
+;(load-theme 'wombat t)
+; coloring
+(add-to-list 'load-path "~/.emacs.d/color-theme")
+(require 'color-theme)
+(load-library "~/.emacs.d/color-theme/themes/monokai-theme")
+(eval-after-load "color-theme"
+  '(progn
+     (color-theme-initialize)
+     (color-theme-monokai)))
+
 ;;; カーソル行
 (global-hl-line-mode t)
-(set-face-background 'hl-line "color-232")
-(set-face-background 'region "#808080")
-(set-face-foreground 'region "#0000ff")
+(set-face-background 'hl-line "color-235")
+(set-face-background 'region "color-235")
+
+(custom-set-faces
+ '(highlight ((t (:background "brightred"))))
+ '(linum ((t (:inherit (shadow default) :foreground "brightblue")))))
+
 
 ;;; list-packages
 (require 'package)
@@ -131,16 +134,52 @@
 (package-initialize)
 
 
+;;; 120byteを超える行をハイライト
+;(setq whitespace-line-column 120)
+
+(require 'whitespace)
+(setq whitespace-style '(face           ; faceで可視化
+                         trailing       ; 行末
+                         tabs           ; タブ
+                         spaces         ; スペース
+                         empty          ; 先頭/末尾の空行
+                         space-mark     ; 表示のマッピング
+                         tab-mark
+                         ))
+
+(setq whitespace-display-mappings
+      '((space-mark ?\u3000 [?\u30fb])
+        ;; WARNING: the mapping below has a problem.
+        ;; When a TAB occupies exactly one column, it will display the
+        ;; character ?\xBB at that column followed by a TAB which goes to
+        ;; the next TAB column.
+        ;; If this is a problem for you, please, comment the line below.
+        (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])))
+
+;; スペースは全角のみを可視化
+(setq whitespace-space-regexp "\\(\u3000+\\)")
+
+;; 保存前に自動でクリーンアップ
+;(setq whitespace-action '(auto-cleanup))
+
 (global-whitespace-mode 1)
-;;; スペースの定義は全角スペースとする。
-(setq whitespace-space-regexp "\x3000+")
-;(setq whitespace-style '(face empty tabs lines-tail trailing))
-(setq whitespace-style '(face tabs lines-tail trailing))
-(setq whitespace-line-column 120)
+
+(set-face-attribute 'whitespace-trailing nil
+                    :background "#1d1f21"
+                    :foreground "DeepPink"
+                    :underline t)
+(set-face-attribute 'whitespace-tab nil
+                    :background "#1d1f21"
+                    :foreground "LightSkyBlue"
+                    :underline t)
+(set-face-attribute 'whitespace-space nil
+                    :background "#1d1f21"
+                    :foreground "GreenYellow"
+                    :weight 'bold)
+(set-face-attribute 'whitespace-empty nil
+                    :background "#1d1f21")
 
 
-;;; タブの色を変更
-(set-face-foreground 'whitespace-tab "#000000")
 
 ;;; 半角スペースと改行を除外
 (dolist (d '((space-mark ?\ ) (newline-mark ?\n)))
@@ -230,19 +269,36 @@
 
 
 (custom-set-variables
- '(helm-mini-default-sources '(helm-source-buffers-list
-                               helm-source-recentf
-                               helm-source-files-in-current-dir
-                               helm-source-emacs-commands-history
-                               helm-source-emacs-commands
-                               )))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(helm-mini-default-sources
+   (quote
+	(helm-source-buffers-list helm-source-recentf helm-source-files-in-current-dir helm-source-emacs-commands-history helm-source-emacs-commands)))
+ '(safe-local-variable-values (quote ((encoding . utf-8)))))
 (define-key global-map (kbd "C-;") 'helm-mini)
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
+(custom-set-faces
+ '(helm-selection ((t (:background "#2a2a2a" :distant-foreground "black")))))
 
+
+;;; flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;;; markdown
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+;;; rust
+(setq racer-rust-src-path "/usr/local/rust/src")
+(setq racer-cmd "/usr/local/rust/racer/target/release/racer")
+;(eval-after-load "rust-mode" '(require 'racer))
+
+(add-hook 'rust-mode-hook #'racer-mode)
+;(add-hook 'racer-mode-hook #'eldoc-mode
+(add-hook 'racer-mode-hook #'company-mode)
+
 
 ;;; scala-mode
 ;; (add-to-list 'load-path "~/.emacs.d/scala-mode")
@@ -289,13 +345,25 @@
 ;;    (setq tab-width 2)
 ;;))
 
+;;; python
+(require 'jedi-core)
+(setq jedi:complete-on-dot t)
+(setq jedi:use-shortcuts t)
 
 (add-hook 'python-mode-hook
                    '(lambda()
-                        (setq indent-tabs-mode nil)
-                        (setq indent-level 4)
-                        (setq python-indent 4)
-                        (setq tab-width 4)))
+                      (jedi:setup)
+                      (with-eval-after-load 'company
+                        (add-to-list 'company-backends 'company-jedi))
+                      (setq indent-tabs-mode nil)
+                      (setq indent-level 4)
+                      (setq python-indent 4)
+                      (setq tab-width 4)))
+
+;; Basic usage.
+;(add-to-list 'company-backends 'company-jedi)
+;; Advanced usage.
+;(add-to-list 'company-backends '(company-jedi company-files))
 
 ;;; ;;; git
 ;;; (require 'git)
@@ -323,6 +391,13 @@
 ;;  ;; If there is more than one, they won't work right.
 ;; )
 
+
+;;; company-mode
+(add-hook 'after-init-hook 'global-company-mode)
+(global-set-key (kbd "TAB") #'company-indent-or-complete-common) ;
+(setq company-tooltip-align-annotations t)
+
+
 ; mark-word-at-point
 (defun mark-word-at-point ()
   (interactive)
@@ -334,18 +409,8 @@
 (global-set-key [M-up] 'mark-word-at-point)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((encoding . utf-8)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+
 
 (defun backward-kill-word-or-kill-region ()
   (interactive)
