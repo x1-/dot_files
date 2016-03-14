@@ -172,41 +172,19 @@ case ${OSTYPE} in
         ;;
 esac
 
+#######################################
+# 環境依存
+
+export EDITOR=/usr/bin/vim
+export SHELL=/bin/zsh
+
+# brew api token
+if [ -f ~/.brew_api_token ];then
+  source ~/.brew_api_token
+fi
+
 ### jvm
-
-#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
-export M2_HOME=~/tools/maven
-export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512M"
-
-# vim:set ft=zsh:
-export PATH="/Users/a12884/bin:$JAVA_HOME/bin:$PATH:$HOME/tools/scala/bin:$HOME/tools/jad"
-
-# hadoop
-export PATH="/usr/local/hadoop/bin-mapreduce1:$PATH"
-
-### rbenv(for ruby) ###
-#export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
-##PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-#
-#if [ -n "$TMUX" ]; then
-#  export PATH=$HOME/.rbenv/shims:$PATH
-#fi
-
-#unset LD_LIBRARY_PATH
-unset DYLD_LIBRARY_PATH
-LD_LIBRARY_PATH=/usr/local/lib
-
-### tmuxinator ###
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-
-
-
-
-### php
-#export PHP_VERSIONS=$HOME/local/php/versions
-#source $(brew --prefix php-version)/php-version.sh && php-version 5.6.1 >/dev/null
+export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
 
 ### virtualenv
 which virtualenvwrapper.sh > /dev/null
@@ -225,16 +203,3 @@ if [ -s $HOME/.pythonz/etc/bashrc ]; then
     source $HOME/.pythonz/etc/bashrc
 fi
 
-export EDITOR=/usr/bin/vim
-export SHELL=/bin/zsh
-
-# The next line updates PATH for the Google Cloud SDK.
-source '/Users/a12884/tools/google-cloud-sdk/path.zsh.inc'
-
-# The next line enables bash completion for gcloud.
-#source '/Users/a12884/tools/google-cloud-sdk/completion.zsh.inc'
-
-# brew api token
-if [ -f ~/.brew_api_token ];then
-  source ~/.brew_api_token
-fi
