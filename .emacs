@@ -39,6 +39,9 @@
   (interactive)
   (insert "\t")))
 
+;;; タブ
+(setq indent-tabs-mode nil)
+
 ;;; 置換
 (define-key global-map (kbd "M-s s")     'replace-string)
 
@@ -127,7 +130,7 @@
 ;;; カーソル行
 (global-hl-line-mode t)
 (set-face-background 'hl-line "color-235")
-(set-face-background 'region "color-235")
+(set-face-background 'region "color-238")
 
 (custom-set-faces
  '(highlight ((t (:background "brightred"))))
@@ -353,19 +356,20 @@
 ;;))
 
 ;;; python
-(require 'jedi-core)
-(setq jedi:complete-on-dot t)
-(setq jedi:use-shortcuts t)
+;(require 'jedi-core)
+;(setq jedi:complete-on-dot t)
+;(setq jedi:use-shortcuts t)
 
+(add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook
-                   '(lambda()
-                      (jedi:setup)
-                      (with-eval-after-load 'company
-                        (add-to-list 'company-backends 'company-jedi))
-                      (setq indent-tabs-mode nil)
-                      (setq indent-level 4)
-                      (setq python-indent 4)
-                      (setq tab-width 4)))
+  '(lambda()
+     ;(jedi:setup)
+     (with-eval-after-load 'company
+       (add-to-list 'company-backends 'company-anaconda))
+     (setq indent-tabs-mode nil)
+     (setq indent-level 4)
+     (setq python-indent 4)
+     (setq tab-width 4)))
 
 ;; Basic usage.
 ;(add-to-list 'company-backends 'company-jedi)
