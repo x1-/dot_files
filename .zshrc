@@ -184,22 +184,97 @@ if [ -f ~/.brew_api_token ];then
 fi
 
 ### jvm
-export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
+
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
+export M2_HOME=~/tools/maven
+export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512M"
+
+export PATH="/Users/a12884/bin:$JAVA_HOME/bin:$PATH:$HOME/tools/scala/bin:$HOME/tools/jad"
+
+# hadoop
+export PATH="/usr/local/hadoop/bin-mapreduce1:$PATH"
+
+### rbenv(for ruby) ###
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
+##PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+#
+#if [ -n "$TMUX" ]; then
+#  export PATH=$HOME/.rbenv/shims:$PATH
+#fi
+
+#unset LD_LIBRARY_PATH
+unset DYLD_LIBRARY_PATH
+LD_LIBRARY_PATH=/usr/local/lib
+
+### tmuxinator ###
+#[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+### php
+#export PHP_VERSIONS=$HOME/local/php/versions
+#source $(brew --prefix php-version)/php-version.sh && php-version 5.6.1 >/dev/null
 
 ### virtualenv
-which virtualenvwrapper.sh > /dev/null
-if [ $? -eq 0 ]; then
-    source `which virtualenvwrapper.sh`
-    mkdir -p ~/.virtualenvs
-    export WORKON_HOME=~/.virtualenvs
-    export PIP_RESPECT_VIRTUALENV=true
-fi
+#which virtualenvwrapper.sh > /dev/null
+#if [ $? -eq 0 ]; then
+#    source `which virtualenvwrapper.sh`
+#    mkdir -p ~/.virtualenvs
+#    export WORKON_HOME=~/.virtualenvs
+#    export PIP_RESPECT_VIRTUALENV=true
+#fi
 
 ### pythonz
-[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
-PYTHONZ_ROOT=~/.pythonz
-# Pythonz
-if [ -s $HOME/.pythonz/etc/bashrc ]; then
-    source $HOME/.pythonz/etc/bashrc
+#[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
+#PYTHONZ_ROOT=~/.pythonz
+## Pythonz
+#if [ -s $HOME/.pythonz/etc/bashrc ]; then
+#    source $HOME/.pythonz/etc/bashrc
+#fi
+
+### anaconda
+#ANACONDA_HOME=/usr/local/anaconda3
+ANACONDA_HOME=/usr/local/anaconda
+export PATH=${ANACONDA_HOME}/bin:${PATH}
+
+### peco
+function peco-select-history() {
+  local tac
+  if which tac > /dev/null; then
+      tac="tac"
+  else
+      tac="tail -r"
+  fi
+  BUFFER=$(\history -n 1 | \
+      eval $tac | \
+      peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+if [ -x "`which peco`" ]; then
+  alias ll='ls -la | peco'
+  alias topp='top | peco'
+  alias psp='ps -ef | peco'
+  alias pp='ps -ef | peco'
+
+  zle -N peco-select-history
+  bindkey '^r' peco-select-history
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/a12884/tools/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables bash completion for gcloud.
+#source '/Users/a12884/tools/google-cloud-sdk/completion.zsh.inc'
+
+export RUST_SRC_PATH=/usr/local/rust/src
+
+### rbenv(for ruby) ###
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
+##PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+#if [ -n "$TMUX" ]; then
+#  export PATH=$HOME/.rbenv/shims:$PATH
+#fi
 

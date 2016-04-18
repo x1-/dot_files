@@ -371,8 +371,9 @@
 ;;; python
 ;(require 'jedi-core)
 ;(setq jedi:complete-on-dot t)
-(setq jedi:use-shortcuts t)
+;(setq jedi:use-shortcuts t)
 
+(add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook
   '(lambda()
 ;    (jedi:setup)
