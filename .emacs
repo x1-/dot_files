@@ -39,6 +39,9 @@
   (interactive)
   (insert "\t")))
 
+;;; オートインデントはスペース
+(setq-default indent-tabs-mode nil)
+
 ;;; 置換
 (define-key global-map (kbd "M-s s")     'replace-string)
 
@@ -127,11 +130,17 @@
 ;;; カーソル行
 (global-hl-line-mode t)
 (set-face-background 'hl-line "color-235")
-(set-face-background 'region "color-235")
 
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(helm-selection ((t (:background "#2a2a2a" :distant-foreground "black"))))
  '(highlight ((t (:background "brightred"))))
- '(linum ((t (:inherit (shadow default) :foreground "brightblue")))))
+ '(linum ((t (:inherit (shadow default) :foreground "brightblue"))))
+ '(hl-line ((t (:background "#222222"))))
+ '(region ((t (:background "#444444")))))
 
 
 ;;; list-packages
@@ -287,12 +296,11 @@
 (define-key global-map (kbd "C-;") 'helm-mini)
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
-(custom-set-faces
- '(helm-selection ((t (:background "#2a2a2a" :distant-foreground "black")))))
+
 
 
 ;;; flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
+;(add-hook 'after-init-hook #'global-flycheck-mode) ; globalやめ
 
 ;;; markdown
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
@@ -300,12 +308,12 @@
 ;;; rust
 (setq racer-rust-src-path "/usr/local/rust/src")
 (setq racer-cmd "/usr/local/rust/racer/target/release/racer")
-;(eval-after-load "rust-mode" '(require 'racer))
+(eval-after-load "rust-mode" '(require 'racer))
 
 (add-hook 'rust-mode-hook #'racer-mode)
 ;(add-hook 'racer-mode-hook #'eldoc-mode
 (add-hook 'racer-mode-hook #'company-mode)
-
+(add-hook 'racer-mode-hook #'flycheck-mode)
 
 ;;; scala-mode
 ;; (add-to-list 'load-path "~/.emacs.d/scala-mode")
@@ -344,28 +352,37 @@
 ;;(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
 
 
-;;;; JS
-;;(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;;(setq js2-mode-hook
-;;  '(lambda()
-;;    (setq js2-basic-offset 2)
-;;    (setq tab-width 2)
-;;))
+;;; JS
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(setq js2-mode-hook
+  '(lambda()
+    (setq js2-basic-offset 2)
+    (setq js -indent-level 2)
+    (setq tab-width 2)
+))
+
+;;; json-mode
+(add-hook 'json-mode-hook
+  '(lambda ()
+    (make-local-variable 'js-indent-level)
+    (setq js-indent-level 2)))
 
 ;;; python
-(require 'jedi-core)
-(setq jedi:complete-on-dot t)
+;(require 'jedi-core)
+;(setq jedi:complete-on-dot t)
 (setq jedi:use-shortcuts t)
 
+(add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook
-                   '(lambda()
-                      (jedi:setup)
-                      (with-eval-after-load 'company
-                        (add-to-list 'company-backends 'company-jedi))
-                      (setq indent-tabs-mode nil)
-                      (setq indent-level 4)
-                      (setq python-indent 4)
-                      (setq tab-width 4)))
+  '(lambda()
+;    (jedi:setup)
+    (with-eval-after-load 'company
+;      (add-to-list 'company-backends 'company-jedi)
+      (add-to-list 'company-backends 'company-anaconda))
+      (setq indent-tabs-mode nil)
+      (setq indent-level 4)
+      (setq python-indent 4)
+      (setq tab-width 4)))
 
 ;; Basic usage.
 ;(add-to-list 'company-backends 'company-jedi)

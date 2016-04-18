@@ -58,7 +58,8 @@ Based on the TextMate theme Monokai"
      (mode-line-buffer-id ((t (:background "#1f1f1f" :foreground "#eeeeec"))))
      (mode-line-inactive ((t (:background "#1f1f1f" :foreground "#888a85"))))
      (minibuffer-prompt ((t (:foreground "#729fcf")))) ; light sky blue
-     (region ((t (:background "#49483E"))))
+     ;(region ((t (:background "#49483E"))))
+     (region ((t (:background "#383838"))))
 
      ;; Parenthesis matching
      (show-paren-match-face ((t (:foreground "#2e3436" :background "#3E3D32"))))

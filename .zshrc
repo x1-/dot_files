@@ -184,7 +184,23 @@ if [ -f ~/.brew_api_token ];then
 fi
 
 ### jvm
-export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m"
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
+export M2_HOME=~/tools/maven
+export MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512M"
+
+export PATH="$JAVA_HOME/bin:$PATH:$HOME/tools/scala/bin:$HOME/tools/jad"
+
+
+#unset LD_LIBRARY_PATH
+unset DYLD_LIBRARY_PATH
+LD_LIBRARY_PATH=/usr/local/lib
+
+### tmuxinator ###
+#[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+### php
+#export PHP_VERSIONS=$HOME/local/php/versions
+#source $(brew --prefix php-version)/php-version.sh && php-version 5.6.1 >/dev/null
 
 ### virtualenv
 which virtualenvwrapper.sh > /dev/null
@@ -202,4 +218,7 @@ PYTHONZ_ROOT=~/.pythonz
 if [ -s $HOME/.pythonz/etc/bashrc ]; then
     source $HOME/.pythonz/etc/bashrc
 fi
+
+
+export RUST_SRC_PATH=/usr/local/rust/src
 
