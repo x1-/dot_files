@@ -195,30 +195,5 @@ export PATH="$JAVA_HOME/bin:$PATH:$HOME/tools/scala/bin:$HOME/tools/jad"
 unset DYLD_LIBRARY_PATH
 LD_LIBRARY_PATH=/usr/local/lib
 
-### tmuxinator ###
-#[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-
-### php
-#export PHP_VERSIONS=$HOME/local/php/versions
-#source $(brew --prefix php-version)/php-version.sh && php-version 5.6.1 >/dev/null
-
-### virtualenv
-which virtualenvwrapper.sh > /dev/null
-if [ $? -eq 0 ]; then
-    source `which virtualenvwrapper.sh`
-    mkdir -p ~/.virtualenvs
-    export WORKON_HOME=~/.virtualenvs
-    export PIP_RESPECT_VIRTUALENV=true
-fi
-
-### pythonz
-[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
-PYTHONZ_ROOT=~/.pythonz
-# Pythonz
-if [ -s $HOME/.pythonz/etc/bashrc ]; then
-    source $HOME/.pythonz/etc/bashrc
-fi
-
-
 export RUST_SRC_PATH=/usr/local/rust/src
 
