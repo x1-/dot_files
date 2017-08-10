@@ -111,26 +111,18 @@
 ;;; カレントディレクトリをホームディレクトリに設定
 (cd "~/")
 
+;;; color
+(setq custom-theme-directory "~/.emacs.d/themes/")
+(load-theme 'monokai t)
+
 ;;; load-path
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (require 'install-elisp)
 (setq install-elisp-repository-directory "~/.emacs.d/elisp/")
 
-;;; theme
-;(load-theme 'wombat t)
-; coloring
-(add-to-list 'load-path "~/.emacs.d/color-theme")
-(require 'color-theme)
-(load-library "~/.emacs.d/color-theme/themes/monokai-theme")
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (color-theme-monokai)))
-
 ;;; カーソル行
 (global-hl-line-mode t)
 (set-face-background 'hl-line "color-235")
-
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -146,8 +138,10 @@
 
 ;;; list-packages
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("melpa" . "http://melpa.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")))
 (package-initialize)
 
 
@@ -292,7 +286,7 @@
  ;; If there is more than one, they won't work right.
  '(helm-mini-default-sources
    (quote
-	(helm-source-buffers-list helm-source-recentf helm-source-files-in-current-dir helm-source-emacs-commands-history helm-source-emacs-commands)))
+     (helm-source-buffers-list helm-source-recentf helm-source-files-in-current-dir helm-source-emacs-commands-history helm-source-emacs-commands)))
  '(safe-local-variable-values (quote ((encoding . utf-8)))))
 (define-key global-map (kbd "C-;") 'helm-mini)
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
