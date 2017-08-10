@@ -127,7 +127,7 @@ bindkey '^R' history-incremental-pattern-search-backward
 # エイリアス
 
 alias la='ls -a'
-alias ll='ls -l'
+alias ll='ls -lh'
 
 alias rm='rm -i'
 alias cp='cp -i'
@@ -196,21 +196,4 @@ unset DYLD_LIBRARY_PATH
 LD_LIBRARY_PATH=/usr/local/lib
 
 export RUST_SRC_PATH=/usr/local/rust/src
-
-# The next line updates PATH for the Google Cloud SDK.
-source '/Users/a12884/tools/google-cloud-sdk/path.zsh.inc'
-
-# The next line enables bash completion for gcloud.
-#source '/Users/a12884/tools/google-cloud-sdk/completion.zsh.inc'
-
-export RUST_SRC_PATH=/usr/local/rust/src
-
-### rbenv(for ruby) ###
-#export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
-##PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-#if [ -n "$TMUX" ]; then
-#  export PATH=$HOME/.rbenv/shims:$PATH
-#fi
 

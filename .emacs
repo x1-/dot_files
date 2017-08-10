@@ -133,6 +133,15 @@
  '(highlight ((t (:background "brightred"))))
  '(linum ((t (:inherit (shadow default) :foreground "brightblue"))))
  '(hl-line ((t (:background "#222222"))))
+ '(markdown-header-delimiter-face ((t (:inherit org-mode-line-clock))))
+ '(markdown-header-face-1 ((t (:inherit outline-1 :weight bold))))
+ '(markdown-header-face-2 ((t (:inherit outline-2 :weight bold))))
+ '(markdown-header-face-3 ((t (:inherit outline-3 :weight bold))))
+ '(markdown-header-face-4 ((t (:inherit outline-4 :weight bold))))
+ '(markdown-header-face-5 ((t (:inherit outline-5 :weight bold))))
+ '(markdown-header-face-6 ((t (:inherit outline-6 :weight bold))))
+ '(markdown-markup-face ((t (:inherit org-formula))))
+ '(markdown-pre-face ((t (:inherit org-formula))))
  '(region ((t (:background "#444444")))))
 
 
@@ -337,16 +346,6 @@
 ;;;       (setq tab-width 4)))
 
 
-;;;; haskell
-;;(add-to-list 'load-path "~/.emacs.d/elisp/haskell-mode-2.8.0")
-;;
-;;(require 'haskell-mode)
-;;(require 'haskell-cabal)
-
-;;(add-to-list 'interpreter-mode-alist '("runghc" . haskell-mode))     ;#!/usr/bin/env runghc 用
-;;(add-to-list 'interpreter-mode-alist '("runhaskell" . haskell-mode)) ;#!/usr/bin/env runhaskell 用
-
-
 ;;; JS
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (setq js2-mode-hook
@@ -363,31 +362,15 @@
     (setq js-indent-level 2)))
 
 ;;; python
-;(require 'jedi-core)
-;(setq jedi:complete-on-dot t)
-;(setq jedi:use-shortcuts t)
-
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook
   '(lambda()
-;    (jedi:setup)
     (with-eval-after-load 'company
-;      (add-to-list 'company-backends 'company-jedi)
       (add-to-list 'company-backends 'company-anaconda))
       (setq indent-tabs-mode nil)
       (setq indent-level 4)
       (setq python-indent 4)
       (setq tab-width 4)))
-
-;; Basic usage.
-;(add-to-list 'company-backends 'company-jedi)
-;; Advanced usage.
-;(add-to-list 'company-backends '(company-jedi company-files))
-
-;;; ;;; git
-;;; (require 'git)
-;;; (require 'git-blame)
-;;; (require 'vc-git)
 
 ;;; ;;; simple-note
 ;;; (require 'simplenote)
