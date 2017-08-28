@@ -12,8 +12,3 @@ end
 if test -e ~/.config/fish/specific.fish
   . ~/.config/fish/specific.fish
 end
-
-### peco
-function fish_user_key_bindings
-  bind \cr 'peco_select_history (commandline -b)'
-end
