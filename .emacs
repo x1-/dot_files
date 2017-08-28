@@ -83,11 +83,6 @@
 (require 'saveplace)
 (setq-default save-place t)
 
-;;; cua-mode
-(cua-mode t)
-(setq cua-enable-cua-keys nil) ; デフォルトキーバインドを無効化
-(define-key global-map (kbd "C-x SPC") 'cua-rectangle-mark-mode)
-
 ;;; インデント停止
 (add-hook 'c-mode-hook
           '(lambda ()
