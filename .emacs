@@ -23,6 +23,17 @@
   (setq x-select-enable-clipboard t)
 ))
 
+;;; list-packages
+(require 'package)
+(package-initialize)
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("melpa" . "http://melpa.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;;; バックアップファイルを作らない
 (setq backup-inhibited t)
 
@@ -107,7 +118,6 @@
 (cd "~/")
 
 ;;; color
-(setq custom-theme-directory "~/.emacs.d/themes/")
 (load-theme 'monokai t)
 
 ;;; load-path
@@ -138,15 +148,6 @@
  '(markdown-markup-face ((t (:inherit org-formula))))
  '(markdown-pre-face ((t (:inherit org-formula))))
  '(region ((t (:background "#444444")))))
-
-
-;;; list-packages
-(require 'package)
-(setq package-archives
-      '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("melpa" . "http://melpa.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
-(package-initialize)
 
 
 ;;; 120byteを超える行をハイライト
@@ -235,14 +236,14 @@
 (setq interprogram-paste-function 'copy-from-osx)
 
 ;;; direx
-(require 'popwin)
-(require 'direx)
-(setq direx:leaf-icon "  "
-      direx:open-icon "▾ "
-      direx:closed-icon "▸ ")
-(push '(direx:direx-mode :position left :width 25 :dedicated t)
-      popwin:special-display-config)
-(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
+;(require 'popwin)
+;(require 'direx)
+;(setq direx:leaf-icon "  "
+;      direx:open-icon "▾ "
+;      direx:closed-icon "▸ ")
+;(push '(direx:direx-mode :position left :width 25 :dedicated t)
+;      popwin:special-display-config)
+;(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
 
 ;; helm
 (require 'helm-config)
