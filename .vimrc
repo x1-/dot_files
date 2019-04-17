@@ -51,7 +51,8 @@ set wildchar=<C-Z>
 set backspace=2
 
 
-"--- Appearance
+"--- Appearance ---
+set title
 set showcmd
 set laststatus=2
 set statusline=[%n]
@@ -59,3 +60,15 @@ set statusline=[%n]
 set statusline+=[%{&fileformat}]
 set statusline+=[%{has('multi_byte')&&\&fileencoding!=''?&fileencoding:&encoding}]
 set statusline+=%y
+
+
+"--- move line/word ---
+nmap <C-e> $
+nmap <C-a> 0
+nmap <C-f> W
+nmap <C-b> B
+imap <C-e> <C-o>$
+imap <C-a> <C-o>0
+imap <C-f> <C-o>W
+imap <C-b> <C-o>B
+
