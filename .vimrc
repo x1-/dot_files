@@ -2,15 +2,10 @@ syntax enable
 
 "color
 "colorscheme desert
-"colorscheme murphy
-"colorscheme jellybeans
-let g:hybrid_use_iTerm_colors = 1
-colorscheme hybrid
-syntax on
-"colorscheme hybrid
+colorscheme molokai
+"let g:molokai_original = 1
 
-"set background=dark
-"colorscheme solarized
+syntax on
 
 set nocompatible
 

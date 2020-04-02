@@ -18,4 +18,7 @@ alias emacs 'env TERM=xterm-256color /usr/local/bin/emacs'
 
 # exa
 alias le 'exa -bghHliS'
+alias lax 'exa -abghHlS'
+alias llx 'exa -abghHliS'
+alias lll 'exa -abghHl'
 
