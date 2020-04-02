@@ -27,17 +27,24 @@ set-option -g status-interval 1
 # mouse wheel
 set -g mouse on
 bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'copy-mode -e'"
-#bind -n WheelDownPane select-pane -t= ; send-keys -M
+
 ## コマンドモードでの選択方法をemacs風に変更
 set-window-option -g mode-keys emacs
 setw -g mode-keys emacs
 bind-key -T copy-mode Space send -X begin-selection
-## クリップボートとの連携(WLS)
+
+## クリップボートとの連携
 bind-key -T copy-mode C-w send -X copy-selection -x
 unbind -T copy-mode Enter
+### Mac OSX
 bind-key -T copy-mode Enter send -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode y send -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+### Linux
+#bind-key -T copy-mode Enter send -X copy-pipe-and-cancel "xsel -ip && xsel -op | xsel -ib"
+#bind-key -T copy-mode y send -X copy-pipe-and-cancel "xsel -ip && xsel -op | xsel -ib"
+#bind-key -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xsel -ip && xsel -op | xsel -ib"
+
 # 設定ファイルをリロードする
 bind r source-file ~/.tmux.conf \; display "Reloaded!"
 # Window & Pane
@@ -65,12 +72,14 @@ bind C-b kill-session
 #bind e setw synchronize-panes
 bind e setw synchronize-panes on
 bind E setw synchronize-panes off
+
 # Editing
 # vでマーク開始 or [space]
-#bind -T copy-mode Space send-keys -X begin-selection
-#bind-key -T copy-mode C-w send-keys -X copy-selection -x
+bind -T copy-mode Space send-keys -X begin-selection
+bind-key -T copy-mode C-w send-keys -X copy-selection -x
 # yでヤンク or [Enter]
-#bind-key -T copy-mode Enter send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+bind-key -T copy-mode Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+
 ### plugins
 set -g @tpm_plugins '              \
   tmux-plugins/tpm                 \
